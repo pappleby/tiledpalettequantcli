@@ -15,6 +15,12 @@ function myParseInt(value) {
     }
     return parsedValue;
   };
+function myParseOptionalInt(value){
+    if(!value){
+        return null;
+    }
+    return myParseInt(value);
+};
 function myParseFloatLessThan1(value) {
     const parsedValue = parseFloat(value);
     if (isNaN(parsedValue)) {
@@ -34,9 +40,9 @@ function myValidateColor(value) {
 
 program
     .option(
-        '-v, --vsplit',
-        'Split resulting file into vertical 256px chunks',
-        false
+        '-v, --vsplit [v]',
+        'Split resulting file into vertical chunks of [v] pixels each',
+        myParseOptionalInt
     )
     .option(
         '-o, --output [prefix]',
@@ -201,19 +207,21 @@ function saveImage(dataURL, i) {
 
 function exportImages(imageData) {
 
-    const verticalSliceCount = Math.floor(imageData.height / 256);
-    const pixelsPerSlice = imageData.width * 256;
-    if (vsplit && verticalSliceCount > 1) {
-        for (let i = 0; i < verticalSliceCount; i++) {
-            let slicedData = imageData.colorIndexes.slice(i * pixelsPerSlice, (i + 1) * pixelsPerSlice)
-            let bmpResult = bmpToDataURL(imageData.width, 256, imageData.paletteData, slicedData);
-            saveImage(bmpResult, i);
+    if(vsplit){
+        const verticalSliceCount = Math.floor(imageData.height / vsplit);
+        const pixelsPerSlice = imageData.width * vsplit;
+        if (verticalSliceCount > 1) {
+            for (let i = 0; i < verticalSliceCount; i++) {
+                let slicedData = imageData.colorIndexes.slice(i * pixelsPerSlice, (i + 1) * pixelsPerSlice)
+                let bmpResult = bmpToDataURL(imageData.width, vsplit, imageData.paletteData, slicedData);
+                saveImage(bmpResult, i);
+            }
+            return;
         }
-
-    } else {
-        const bmpResult = bmpToDataURL(imageData.width, imageData.height, imageData.paletteData, imageData.colorIndexes);
-        saveImage(bmpResult);
     }
+    
+    const bmpResult = bmpToDataURL(imageData.width, imageData.height, imageData.paletteData, imageData.colorIndexes);
+    saveImage(bmpResult);
 }
 
 const chunks = [];
@@ -249,7 +257,3 @@ readable.on('end', () => {
     };
     sourceImage.src = buf;
 });
-
-
-
-
