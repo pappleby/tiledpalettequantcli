@@ -1,8 +1,8 @@
 # TiledPaletteQuantCLI
 
-A nodejs cli version of https://github.com/rilden/tiledpalettequant (https://rilden.github.io/tiledpalettequant/) allowing for conversion of images to quantized bitmap files, with optional dithering. 
+A NodeJS command line interface port of rilden's fantastic tile palette quantization / dithering tool https://rilden.github.io/tiledpalettequant/ (https://github.com/rilden/tiledpalettequant)/
 
-An additional feature is the ability to vertically split the quantized image. This can be used to quantize multiple images using a shared set of palettes.
+An additional feature added is the ability to vertically split the quantized image. This can be used to quantize multiple images using a shared set of palettes.
 
 Note that this has only been tested in WSL so your milage may vary running on other platforms (anything with a terminal that can run NodeJS should work though). 
 
@@ -44,6 +44,9 @@ Options:
 `cat test.png | npx tiledpalettequantcli`
 
 `npx tiledpalettequantcli -f example.png --ditherMethod Fast --ditherPattern Horizontal2`
+
+
+Using an external tool to resize and quantize multiple source images at once:
 
 `magick *.jpg -background 'rgba(0,0,0,0)' -resize '240' -extent 256x256 -append png:- | npx tiledpalettequantcli -output sharedPaletteExample -vsplit 256 -d Slow -p 5`
 
