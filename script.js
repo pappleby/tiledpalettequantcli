@@ -1,3 +1,4 @@
+#! /usr/bin/env node
 const { createCanvas, Image } = require('canvas')
 const { program, Option, InvalidArgumentError } = require('commander');
 const fs = require('node:fs');

@@ -1,9 +1,11 @@
 {
   "name": "tiledpalettequantcli",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "A nodejs cli version of https://github.com/rilden/tiledpalettequant (https://rilden.github.io/tiledpalettequant/) allowing for conversion of images to quantized bitmap files, with optional dithering",
   "main": "script.js",
   "license": "MIT",
+  "homepage": "https://github.com/pappleby/tiledpalettequantcli",
+  "bin": "script.js",
   "dependencies": {
     "canvas": "^2.11.2",
     "commander": "^12.1.0"
