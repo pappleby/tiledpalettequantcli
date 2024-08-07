@@ -41,6 +41,10 @@ function myValidateColor(value) {
 
 program
     .option(
+        '-f, --file [f]',
+        'Input file to quantize (can also accept images from stdin if this option not included)'
+    )
+    .option(
         '-v, --vsplit [v]',
         'Split resulting file into vertical chunks of [v] pixels each',
         myParseOptionalInt
@@ -130,8 +134,9 @@ const fractionOfPixels = opts.fractionOfPixels;
 
 const outputName = opts.output;
 const vsplit = opts.vsplit;
-const readable = process.stdin;
 
+const readable = opts.file ? fs.createReadStream(opts.file) : process.stdin;
+const stdinTimeout = opts.file ? null : setTimeout(() => {program.help()}, 2000)
 const colorZeroBehaviour = ColorZeroBehaviour[opts.colorZeroBehaviour];
 const colorZeroValue = hexToColor(opts.colorZero);
 
@@ -226,7 +231,6 @@ function exportImages(imageData) {
 }
 
 const chunks = [];
-
 readable.on('readable', () => {
     let chunk;
     while (null !== (chunk = readable.read())) {
@@ -235,6 +239,7 @@ readable.on('readable', () => {
 });
 
 readable.on('end', () => {
+    stdinTimeout && clearTimeout(stdinTimeout);
     const buf = Buffer.concat(chunks);
     const sourceImage = new Image();
     sourceImage.onerror = err => { throw err }
@@ -258,3 +263,4 @@ readable.on('end', () => {
     };
     sourceImage.src = buf;
 });
+
