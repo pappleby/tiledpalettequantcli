@@ -40,7 +40,7 @@ ditherPatterns.set(DitherPattern.Vertical2, [
     [0, 0],
     [1, 1],
 ]);
-let ditherPattern = ditherPatterns.get(quantizationOptions.);
+let ditherPattern = ditherPatterns.get(quantizationOptions.ditherPattern);
 
 let resultPal = null;
 let resultImage = null;
