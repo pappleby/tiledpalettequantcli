@@ -21,6 +21,7 @@ Options:
 | -f | --file [f] | Input file to quantize (can also accept images from stdin if this option not included) |
 |  -v | --vsplit [v]                 |  Split resulting file into vertical chunks of [v] pixels each |
 |  -o | --output [prefix]            |  Output name prefix (default is the current directory name) |
+|  -si | --startIndex [si]                 |  Start index for output names (default is no suffix if not needed, 0 if using --vsplit) |
 |  -tw | --tileWidth [width]         |  Tile width px (default: 8) |
 |  -th | --tileHeight [height]       |  Tile height px (default: 8) |
 |  -p | --palettes [p]               |  Number of palettes (default: 1) |

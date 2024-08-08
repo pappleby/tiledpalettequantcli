@@ -55,6 +55,11 @@ program
         currDirName,
     )
     .option(
+        '-si, --startIndex [si]',
+        'Start index for output names (default is no suffix if not needed, 0 if using --vsplit)',
+        myParseOptionalInt
+    )
+    .option(
         '-tw, --tileWidth [width]',
         'Tile width px',
         myParseInt,
@@ -134,6 +139,7 @@ const fractionOfPixels = opts.fractionOfPixels;
 
 const outputName = opts.output;
 const vsplit = opts.vsplit;
+const startIndex = opts.startIndex;
 
 const readable = opts.file ? fs.createReadStream(opts.file) : process.stdin;
 const stdinTimeout = opts.file ? null : setTimeout(() => {program.help()}, 2000)
@@ -216,18 +222,19 @@ function exportImages(imageData) {
     if(vsplit){
         const verticalSliceCount = Math.floor(imageData.height / vsplit);
         const pixelsPerSlice = imageData.width * vsplit;
+        const suffixStartIndex = startIndex ?? 0;
         if (verticalSliceCount > 1) {
             for (let i = 0; i < verticalSliceCount; i++) {
                 let slicedData = imageData.colorIndexes.slice(i * pixelsPerSlice, (i + 1) * pixelsPerSlice)
                 let bmpResult = bmpToDataURL(imageData.width, vsplit, imageData.paletteData, slicedData);
-                saveImage(bmpResult, i);
+                saveImage(bmpResult, suffixStartIndex + i);
             }
             return;
         }
     }
-    
+    const suffix = startIndex === null ? '' : startIndex
     const bmpResult = bmpToDataURL(imageData.width, imageData.height, imageData.paletteData, imageData.colorIndexes);
-    saveImage(bmpResult);
+    saveImage(bmpResult, suffix);
 }
 
 const chunks = [];
