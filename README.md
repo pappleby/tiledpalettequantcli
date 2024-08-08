@@ -8,9 +8,9 @@ Note that this has only been tested in WSL so your milage may vary running on ot
 
 # Installation
 With a recent version of NodeJS installed, run one of the following:
-- `npm -i tiledpalettequantcli`
+- `npm install tiledpalettequantcli`
 - `npx tiledpalettequantcli`
-- `npm -i tiledpalettequantcli -g` (to install globally)
+- `npm install tiledpalettequantcli -g` (to install globally)
 
 # Usage
 In the terminal, run `npx tiledpalettequantcli [Options]` or `tiledpalettequantcli [Options]` (depending if you installed locally or globally)
@@ -48,5 +48,5 @@ Options:
 
 Using an external tool to resize and quantize multiple source images at once:
 
-`magick *.jpg -background 'rgba(0,0,0,0)' -resize '240' -extent 256x256 -append png:- | npx tiledpalettequantcli -output sharedPaletteExample -vsplit 256 -d Slow -p 5`
+`magick *.jpg -background 'rgba(0,0,0,0)' -resize '240' -gravity Center -extent 256x256 -append png:- | npx tiledpalettequantcli -output sharedPaletteExample -vsplit 256 -d Slow -p 5`
 
