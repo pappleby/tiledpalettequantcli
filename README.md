@@ -1,6 +1,6 @@
 # TiledPaletteQuantCLI
 
-A NodeJS command line interface port of rilden's fantastic tile palette quantization / dithering tool https://rilden.github.io/tiledpalettequant/ (https://github.com/rilden/tiledpalettequant)/
+A NodeJS command line interface port of rilden's fantastic tile palette quantization / dithering tool https://rilden.github.io/tiledpalettequant/ (https://github.com/rilden/tiledpalettequant/)
 
 An additional feature added is the ability to vertically split the quantized image. This can be used to quantize multiple images using a shared set of palettes.
 
